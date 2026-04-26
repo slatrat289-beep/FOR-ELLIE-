@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For You, Ellie 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --rose: #e8527a;
+      --blush: #f7a8bf;
+      --deep: #b5294e;
+      --lavender: #c9a7eb;
+      --cream: #fff5f7;
+      --gold: #f0c060;
+      --text-dark: #5a1a2e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: #1a0510;
+      font-family: 'Lato', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom emoji cursor */
+    #emoji-cursor {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: 1.6rem;
+      transform: translate(-50%, -50%);
+      transition: transform 0.05s;
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* Deep romantic background */
+    .bg-gradient {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(180,40,80,0.25) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 80%, rgba(120,30,100,0.25) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 50%, rgba(90,10,40,0.4) 0%, transparent 70%),
+        linear-gradient(160deg, #1a0510 0%, #2a0820 40%, #1c0615 100%);
+      z-index: 0;
+    }
+
+    /* Petal / heart particles */
+    .bg-shapes {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .shape {
+      position: absolute;
+      opacity: 0;
+      animation: petalFall linear infinite;
+    }
+    @keyframes petalFall {
+      0%   { transform: translateY(-5vh) translateX(0px) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.55; }
+      90%  { opacity: 0.3; }
+      100% { transform: translateY(105vh) translateX(40px) rotate(360deg); opacity: 0; }
+    }
+
+    /* Main container */
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 60px 24px 70px;
+      text-align: center;
+    }
+
+    /* Decorative top line */
+    .top-ornament {
+      font-size: 1.5rem;
+      letter-spacing: 10px;
+      color: var(--gold);
+      margin-bottom: 18px;
+      opacity: 0.85;
+      animation: fadeDown 1s ease both;
+    }
+
+    /* Main title */
+    .top-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(3rem, 10vw, 5.2rem);
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: 2px;
+      line-height: 1.1;
+      margin-bottom: 6px;
+      animation: fadeDown 1s 0.2s ease both;
+      text-shadow: 0 0 40px rgba(232, 82, 122, 0.6), 0 0 80px rgba(232,82,122,0.2);
+    }
+
+    .top-title .name-highlight {
+      color: var(--blush);
+      font-style: italic;
+    }
+
+    .subtitle {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+      color: var(--lavender);
+      opacity: 0.8;
+      margin-bottom: 36px;
+      animation: fadeDown 1s 0.4s ease both;
+      letter-spacing: 1px;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 0 auto 36px;
+      max-width: 320px;
+      animation: fadeDown 1s 0.5s ease both;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--rose), transparent);
+    }
+    .divider-icon { color: var(--rose); font-size: 1rem; }
+
+    /* Card */
+    .card {
+      background: rgba(255, 240, 248, 0.055);
+      backdrop-filter: blur(18px);
+      border-radius: 32px;
+      border: 1px solid rgba(232, 82, 122, 0.28);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04),
+        0 20px 60px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+      padding: 44px 40px 50px;
+      margin-top: 0;
+      animation: fadeUp 1s 0.6s ease both;
+    }
+
+    /* Section heading */
+    .section-heading {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      color: var(--blush);
+      margin-bottom: 28px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 20px rgba(247,168,191,0.4);
+    }
+
+    /* Reasons list */
+    .reasons {
+      list-style: none;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .reasons li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 18px;
+      padding: 15px 20px;
+      font-size: 1.0rem;
+      font-weight: 400;
+      color: rgba(255,240,248,0.88);
+      border: 1px solid rgba(232,82,122,0.18);
+      transition: transform 0.25s, background 0.25s, border-color 0.25s;
+      animation: fadeUp 0.6s ease both;
+      letter-spacing: 0.3px;
+      line-height: 1.5;
+    }
+    .reasons li:hover {
+      transform: translateX(8px);
+      background: rgba(232,82,122,0.1);
+      border-color: rgba(232,82,122,0.4);
+    }
+    .reasons li:nth-child(1)  { animation-delay: 0.7s; }
+    .reasons li:nth-child(2)  { animation-delay: 0.82s; }
+    .reasons li:nth-child(3)  { animation-delay: 0.94s; }
+    .reasons li:nth-child(4)  { animation-delay: 1.06s; }
+    .reasons li:nth-child(5)  { animation-delay: 1.18s; }
+    .reasons li:nth-child(6)  { animation-delay: 1.30s; }
+    .reasons li:nth-child(7)  { animation-delay: 1.42s; }
+    .reasons li:nth-child(8)  { animation-delay: 1.54s; }
+    .reasons li:nth-child(9)  { animation-delay: 1.66s; }
+    .reasons li:nth-child(10) { animation-delay: 1.78s; }
+
+    .bullet-icon { font-size: 1.25rem; flex-shrink: 0; }
+
+    /* Special tag for Tuck / Soccer */
+    .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: rgba(232,82,122,0.2);
+      color: var(--blush);
+      border: 1px solid rgba(232,82,122,0.35);
+      border-radius: 50px;
+      padding: 2px 9px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* Section break */
+    .section-break {
+      margin: 36px 0 28px;
+      animation: fadeUp 1s 1.9s ease both;
+    }
+
+    /* Rizz section */
+    .rizz-section {
+      margin-top: 36px;
+      animation: fadeUp 1s 2s ease both;
+    }
+
+    .click-btn {
+      display: inline-block;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, #e8527a, #c9366b, #a8245a);
+      border: none;
+      border-radius: 50px;
+      padding: 18px 46px;
+      cursor: pointer;
+      box-shadow: 0 6px 30px rgba(232,82,122,0.45), 0 0 0 0 rgba(232,82,122,0.4);
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      letter-spacing: 1px;
+      animation: pulseGlow 2.5s ease-in-out infinite;
+    }
+    .click-btn:hover {
+      transform: scale(1.07) translateY(-3px);
+      box-shadow: 0 16px 45px rgba(232,82,122,0.55);
+    }
+    .click-btn:active { transform: scale(0.97); }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 6px 30px rgba(232,82,122,0.45), 0 0 0 0 rgba(232,82,122,0.3); }
+      50%       { box-shadow: 0 6px 30px rgba(232,82,122,0.6), 0 0 0 12px rgba(232,82,122,0); }
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,0,15,0.75);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.show { display: flex; }
+
+    .modal {
+      background: linear-gradient(160deg, #2a0820, #1e0618);
+      border-radius: 32px;
+      border: 1px solid rgba(232,82,122,0.4);
+      box-shadow:
+        0 30px 80px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(255,255,255,0.05),
+        inset 0 1px 0 rgba(255,255,255,0.07);
+      padding: 50px 38px 42px;
+      max-width: 420px;
+      width: 92%;
+      text-align: center;
+      animation: popIn 0.45s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.5) translateY(30px); opacity: 0; }
+      to   { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .modal .emoji { font-size: 3.2rem; margin-bottom: 16px; }
+    .modal .rizz-line {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.45rem;
+      color: var(--blush);
+      margin-bottom: 10px;
+      line-height: 1.55;
+      text-shadow: 0 0 20px rgba(247,168,191,0.4);
+    }
+    .modal .sub {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.92rem;
+      color: var(--lavender);
+      margin-top: 10px;
+      margin-bottom: 28px;
+      opacity: 0.8;
+    }
+
+    .modal-btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    .close-btn {
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      letter-spacing: 0.5px;
+      color: var(--blush);
+      background: rgba(232,82,122,0.12);
+      border: 1.5px solid rgba(232,82,122,0.4);
+      border-radius: 50px;
+      padding: 11px 28px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .close-btn:hover {
+      background: var(--rose);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 36px;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--lavender);
+      opacity: 0.55;
+      animation: fadeUp 1s 2.2s ease both;
+      letter-spacing: 1px;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="emoji-cursor">🌹</div>
+  <div class="bg-gradient"></div>
+  <div class="bg-shapes" id="bgShapes"></div>
+
+  <div class="container">
+
+    <div class="top-ornament">✦ &nbsp; 🌹 &nbsp; ✦</div>
+
+    <h1 class="top-title">For You, <span class="name-highlight">Ellie</span></h1>
+    <p class="subtitle">a little something made just for you</p>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span class="divider-icon">❧</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="card">
+      <h2 class="section-heading">💕 The Reasons I Like You</h2>
+
+      <ul class="reasons">
+        <li><span class="bullet-icon">🌟</span> You are absolutely beautiful, inside and out</li>
+        <li><span class="bullet-icon">😂</span> You are genuinely so funny — you always make me smile</li>
+        <li><span class="bullet-icon">🎨</span> You are so incredibly creative</li>
+        <li><span class="bullet-icon">💡</span> You are really smart and it shows in everything you do</li>
+        <li><span class="bullet-icon">🤗</span> You are the kindest, most caring person</li>
+        <li><span class="bullet-icon">🦋</span> Your smile lights up every room you walk into</li>
+        <li><span class="bullet-icon">🎭</span> The way you do <em>Tuck Everlasting</em> is breathtaking — you own that stage <span class="tag">theatre</span></li>
+        <li><span class="bullet-icon">⚽</span> You're incredible at soccer — your talent and passion are so attractive <span class="tag">soccer</span></li>
+        <li><span class="bullet-icon">💫</span> You make everything more fun just by being there</li>
+        <li><span class="bullet-icon">🎵</span> You have amazing taste and a beautiful heart</li>
+      </ul>
+
+      <div class="rizz-section">
+        <button class="click-btn" onclick="openModal()">🌹 A Message For You 🌹</button>
+      </div>
+    </div>
+
+    <div class="footer">written from the heart, just for you 🌹</div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="overlayClick(event)">
+    <div class="modal">
+      <div class="emoji" id="modalEmoji">💖</div>
+      <div class="rizz-line" id="rizzLine">Loading...</div>
+      <div class="sub" id="rizzSub">— just for you, Ellie 🌹</div>
+      <div class="modal-btn-row">
+        <button class="close-btn" onclick="nextRizz()">Another one 💫</button>
+        <button class="close-btn" onclick="closeModal()">Close 🌸</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const rizzLines = [
+      { emoji: "🌹", line: "Are you a star? Because I can't stop looking at you." },
+      { emoji: "🌸", line: "If being amazing was a crime, you'd be doing life." },
+      { emoji: "✨", line: "I must be a snowflake, because I've fallen for you." },
+      { emoji: "🦋", line: "Even Google can't find someone as perfect as you." },
+      { emoji: "💫", line: "Do you have a map? I keep getting lost in your eyes." },
+      { emoji: "🌺", line: "You're like sunshine — you make every day better just by existing." },
+      { emoji: "💝", line: "If you were a song, you'd be on repeat forever." },
+      { emoji: "🌙", line: "I'd never play hide and seek with you — someone like you is impossible to find." },
+      { emoji: "🎭", line: "Watching you perform in Tuck Everlasting… honestly, I was already a fan. Now I'm something more." },
+      { emoji: "⚽", line: "You score goals on the field and somehow still manage to score one in my heart." },
+    ];
+
+    let rizzIndex = 0;
+
+    function openModal() {
+      rizzIndex = Math.floor(Math.random() * rizzLines.length);
+      showRizz();
+      document.getElementById('modalOverlay').classList.add('show');
+    }
+
+    function showRizz() {
+      const r = rizzLines[rizzIndex % rizzLines.length];
+      document.getElementById('modalEmoji').textContent = r.emoji;
+      document.getElementById('rizzLine').textContent = r.line;
+    }
+
+    function nextRizz() {
+      rizzIndex = (rizzIndex + 1) % rizzLines.length;
+      showRizz();
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('show');
+    }
+
+    function overlayClick(e) {
+      if (e.target === document.getElementById('modalOverlay')) closeModal();
+    }
+
+    // Floating rose petals & hearts
+    const shapes = ['🌹','🌸','✦','💖','✨','🌺','💫','❤️','🦋','✿'];
+    const bg = document.getElementById('bgShapes');
+    for (let i = 0; i < 28; i++) {
+      const el = document.createElement('div');
+      el.classList.add('shape');
+      el.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.fontSize = (0.8 + Math.random() * 1.4) + 'rem';
+      el.style.animationDuration = (10 + Math.random() * 14) + 's';
+      el.style.animationDelay = (Math.random() * 12) + 's';
+      bg.appendChild(el);
+    }
+
+    // Rotating emoji cursor
+    const cursorEmojis = ['🌹', '⭐', '🌸', '💖', '🌺', '✨', '💫'];
+    let cursorIdx = 0;
+    const cursorEl = document.getElementById('emoji-cursor');
+    let lastSwitch = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      cursorEl.style.left = e.clientX + 'px';
+      cursorEl.style.top  = e.clientY + 'px';
+      const now = Date.now();
+      if (now - lastSwitch > 600) {
+        cursorIdx = (cursorIdx + 1) % cursorEmojis.length;
+        cursorEl.textContent = cursorEmojis[cursorIdx];
+        lastSwitch = now;
+      }
+    });
+  </script>
+</body>
+</html>
